@@ -3,6 +3,7 @@
 set -ex
 
 while read -r excludes_file
+do
 docker pull "${excludes_file}"
 done < "${WORKSPACE}"/exclude_list
 
