@@ -1,39 +1,44 @@
-FROM alpine:edge
+ARG ALPINE_VER="edge"
+FROM alpine:${ALPINE_VER} as fetch-stage
 
-# runtime variables
-ENV FORCE_CONTAINER_REMOVAL=1 \
-FORCE_IMAGE_REMOVAL=1
+############## fetch stage ##############
 
-
-# install build packages
+# install fetch packages
 RUN \
 	set -ex \
-	&& apk add --no-cache --virtual=build-dependencies \
-	git \
-# install runtime packages
-	\
 	&& apk add --no-cache \
-	bash \
-	docker \
-# fetch source
-	\
-	&& git clone https://github.com/spotify/docker-gc /tmp/docker-gc \
-# link docker executable
-	\
-	&& ln -s /usr/bin/docker \
-	/bin/docker \
-# copy and make docker-gc executable
-	\
-	&& cp /tmp/docker-gc/docker-gc /docker-gc \
-	&& chmod +x /docker-gc \
-# uninstall build packages
-	\
-	&& apk del --purge build-dependencies \
-# clean /tnp
-	&& rm -rf /tmp/*
+		git
 
-# volumes
+
+# fetch source
+RUN \
+	set -ex \
+	&& git clone https://github.com/spotify/docker-gc /tmp/docker-gc \
+	&& install -m755 /tmp/docker-gc/docker-gc /docker-gc
+
+FROM alpine:${ALPINE_VER}
+
+############## runtime stage ##############
+
+# copy artifacts from fetch stage
+COPY --from=fetch-stage /docker-gc /docker-gc
+
+# install runtime packages
+RUN \
+	set -ex \
+	&& apk add --no-cache \
+		bash \
+		docker
+
+# link docker binary to /bin/docker
+RUN \
+	set -ex \
+	&& ln -sf \
+		/usr/bin/docker \
+		/bin/docker
+
+# volumes
 VOLUME /var/lib/docker-gc
 
-# run command
+# run command
 CMD ["/docker-gc"]
