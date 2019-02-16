@@ -1,2 +1,2 @@
-sparklyballs/shellcheck:latest
-sparklyballs/hadolint:latest
+koalaman/shellcheck:latest
+hadolint/hadolint:latest
