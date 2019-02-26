@@ -1,2 +1,3 @@
-lsiodev/shellcheck:latest
 hadolint/hadolint:latest
+lsiodev/shellcheck:latest
+sparklyballs/versioning:latest
