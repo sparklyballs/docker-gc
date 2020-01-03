@@ -15,3 +15,6 @@ docker pull sparklyballs/gc
 docker run --rm \
 	-v /var/run/docker.sock:/var/run/docker.sock \
 	-v "${WORKSPACE}"/exclude_list:/etc/docker-gc-exclude sparklyballs/gc || true
+
+# prune untagged images
+docker image prune -f
