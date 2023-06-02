@@ -1,3 +1,4 @@
 ghcr.io/hadolint/hadolint:latest
 koalaman/shellcheck-alpine:latest
+ghcr.io/linuxserver/readme-sync:latest
 sparklyballs/versioning:latest
