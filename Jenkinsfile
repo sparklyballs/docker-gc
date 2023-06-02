@@ -17,6 +17,8 @@ environment {
 	HADOLINT_OPTIONS = '--ignore DL3008 --ignore DL3013 --ignore DL3018 --ignore DL3028 --format json'
 	}
 
+stages {
+
 stage('Checkout Repository') {
 steps {
 	cleanWs()
@@ -64,6 +66,7 @@ steps {
 	ghcr.io/linuxserver/readme-sync bash -c "node sync"')
 	}
 	}
+}
 
 post {
 success {
