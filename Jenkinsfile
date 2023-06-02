@@ -64,7 +64,6 @@ steps {
 	ghcr.io/linuxserver/readme-sync bash -c "node sync"')
 	}
 	}
-}
 
 post {
 success {
