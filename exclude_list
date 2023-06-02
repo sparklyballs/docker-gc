@@ -1,3 +1,3 @@
-sparklyballs/hadolint:latest
-sparklyballs/shellcheck:latest
+ghcr.io/hadolint/hadolint:latest
+koalaman/shellcheck-alpine:latest
 sparklyballs/versioning:latest
